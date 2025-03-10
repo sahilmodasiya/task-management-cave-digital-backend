@@ -20,9 +20,29 @@
 					"mode": "raw",
 					"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
 				},
-				"url": "{{base_url}}/auth/signup"
+				"url": "{{base_url}}/auth/signup",
+				"description": "Register a new user account"
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": "{{base_url}}/auth/signup"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User registered successfully\"\n}"
+				}
+			]
 		},
 		{
 			"name": "Auth - Login",
@@ -38,9 +58,105 @@
 					"mode": "raw",
 					"raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
 				},
-				"url": "{{base_url}}/auth/login"
+				"url": "{{base_url}}/auth/login",
+				"description": "Login with email and password"
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": "{{base_url}}/auth/login"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"token\": \"jwt_token_here\",\n    \"user\": {\n        \"_id\": \"user_id\",\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Auth - Forgot Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"john@example.com\"\n}"
+				},
+				"url": "{{base_url}}/auth/forgot-password",
+				"description": "Request password reset link"
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\"\n}"
+						},
+						"url": "{{base_url}}/auth/forgot-password"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Password reset link sent to email\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Auth - Reset Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"token\": \"reset_token_from_email\",\n  \"password\": \"new_password123\"\n}"
+				},
+				"url": "{{base_url}}/auth/reset-password",
+				"description": "Reset password using token from email"
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"token\": \"reset_token_from_email\",\n  \"password\": \"new_password123\"\n}"
+						},
+						"url": "{{base_url}}/auth/reset-password"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Password reset successful\",\n    \"token\": \"new_jwt_token\",\n    \"user\": {\n        \"_id\": \"user_id\",\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\"\n    }\n}"
+				}
+			]
 		},
 		{
 			"name": "Task - Get All Tasks",
@@ -52,7 +168,8 @@
 						"value": "Bearer {{token}}"
 					}
 				],
-				"url": "{{base_url}}/tasks"
+				"url": "{{base_url}}/tasks",
+				"description": "Get all tasks for the authenticated user"
 			},
 			"response": []
 		},
@@ -74,7 +191,8 @@
 					"mode": "raw",
 					"raw": "{\n  \"title\": \"New Task\",\n  \"description\": \"This is a new task.\"\n}"
 				},
-				"url": "{{base_url}}/tasks"
+				"url": "{{base_url}}/tasks",
+				"description": "Create a new task"
 			},
 			"response": []
 		},
@@ -88,7 +206,8 @@
 						"value": "Bearer {{token}}"
 					}
 				],
-				"url": "{{base_url}}/tasks/{{task_id}}"
+				"url": "{{base_url}}/tasks/{{task_id}}",
+				"description": "Get a single task by ID"
 			},
 			"response": []
 		},
@@ -110,7 +229,8 @@
 					"mode": "raw",
 					"raw": "{\n  \"title\": \"Updated Task\",\n  \"description\": \"This task has been updated.\"\n}"
 				},
-				"url": "{{base_url}}/tasks/{{task_id}}"
+				"url": "{{base_url}}/tasks/{{task_id}}",
+				"description": "Update an existing task"
 			},
 			"response": []
 		},
@@ -124,7 +244,8 @@
 						"value": "Bearer {{token}}"
 					}
 				],
-				"url": "{{base_url}}/tasks/{{task_id}}"
+				"url": "{{base_url}}/tasks/{{task_id}}",
+				"description": "Delete a task"
 			},
 			"response": []
 		}
@@ -134,20 +255,14 @@
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
 				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		}
 	],
@@ -159,12 +274,12 @@
 		},
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Yzg4NGNkN2U1ZDMxZjFiMzg1YjNlYiIsImlhdCI6MTc0MTE5NDQ1MSwiZXhwIjoxNzQxMTk4MDUxfQ.JSicnEAlWJp6uf8h2Ad-RJFyUGNBqplqp47jm9xZK_I",
+			"value": "your_jwt_token_here",
 			"type": "string"
 		},
 		{
 			"key": "task_id",
-			"value": "",
+			"value": "your_task_id_here",
 			"type": "string"
 		}
 	]
